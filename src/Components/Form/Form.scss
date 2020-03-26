@@ -1,0 +1,87 @@
+.Form{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	h3{
+		margin-top: 50px;
+		font-family: sans-serif;
+		font-style: normal;
+		text-align: center;
+		color: #000;
+		text-transform: uppercase;
+		font-weight: bold;
+		font-size: 30px;
+		line-height: 35px;
+	}
+	div{
+		width: 60%;
+		display: flex;
+		color: #000;
+		flex-direction: column;
+		.first, .second, .third{
+			width: 100%;
+			justify-content: space-between;
+			flex-direction: row;
+		}
+		.first{
+			input, select{
+				width: 45%;
+			}
+		}
+		.second{
+			input, select{
+				width: 70%;
+			}
+		}
+		.third{
+			input, select{
+				width: 30%;
+			}
+		}
+		.fourth{
+			width: 100%;
+			justify-content: space-between;
+			flex-direction: row;
+		}
+		.small{
+			width: 20% !important;
+		}
+		.desc{
+			width: 100%;
+			flex-direction: row;
+			justify-content: space-between;
+			div{
+				width: 40%;
+				flex-direction: column;
+			}
+		}
+		input, textarea, select{
+			margin: 10px 10px;
+			padding: 5px;
+			outline: none;
+			border: 1px solid grey;
+			border-radius: 5px;
+		}
+	}
+	button{
+		cursor: pointer;
+		margin: 60px;
+		outline: none;
+		padding: 10px 30px;
+		border: none;
+		border-radius: 10px;
+		background-color: #FFCE1E;
+		color: black;
+		font-weight: bold;
+		font-size: 24px;
+		line-height: 28px;
+		text-align: center;
+		text-transform: uppercase;
+	}
+}
+@media screen and (max-width: 1100px){
+	.Form{
+
+	}
+}

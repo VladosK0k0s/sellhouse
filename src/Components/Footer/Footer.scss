@@ -1,0 +1,16 @@
+.Footer{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	p{
+		font-family: sans-serif;
+		font-style: normal;
+		margin: 2px;
+	}
+}
+@media screen and (max-width: 1100px){
+	.Footer{
+
+	}
+}
