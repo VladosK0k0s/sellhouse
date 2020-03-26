@@ -33,7 +33,35 @@ class Form extends Component {
         })
     }
     handleClick = () =>{
-        console.log(this.state)
+        try {		
+			const url = 'http://localhost:4000/sendData';
+			const response = fetch(url, {
+					method: 'POST', // *GET, POST, PUT, DELETE, etc.
+					mode: 'cors', // no-cors, cors, *same-origin
+					cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+					credentials: 'same-origin', // include, *same-origin, omit
+					headers: {
+							'Content-Type': 'application/json',
+							//'Content-Type': 'application/x-www-form-urlencoded',
+					},
+					body: JSON.stringify(this.state),
+			});
+			response.then(
+				res => {
+                    console.log(res)
+					res.text()
+					.then(text=>{
+						this.setState({
+							response: text
+						}, () =>{console.log(this.state.response)});
+					})
+			},  rej =>{
+				this.setState({server_error: true})
+			});
+			
+		} catch (error) {
+			console.error('Ошибка:', error);
+		}
     }
     render() {
         return (
