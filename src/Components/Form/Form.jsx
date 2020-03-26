@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Form.scss';
 import { Element } from 'react-scroll';
+/* global google */
 
 class Form extends Component {
     constructor(props) {
@@ -24,17 +25,26 @@ class Form extends Component {
             price: '',
             currency: '',
             condition: '',
-            class: ''
+            class: '',
+            response: false
         }
+        this.autocompleteInput = React.createRef();
+        this.autocomplete = null;
     }
     handleInputChange = (e) =>{
         this.setState({
             [e.target.name]: e.target.value
         })
     }
+    componentDidMount() {
+        this.autocomplete = new google.maps.places.Autocomplete(this.autocompleteInput.current,
+            {"types": ["geocode"]});
+    
+        this.autocomplete.addListener('place_changed', this.handlePlaceChanged);
+      }
     handleClick = () =>{
         try {		
-			const url = 'http://localhost:4000/sendData';
+			const url = 'http://api.sellhouse.com.ua/sendData';
 			const response = fetch(url, {
 					method: 'POST', // *GET, POST, PUT, DELETE, etc.
 					mode: 'cors', // no-cors, cors, *same-origin
@@ -52,11 +62,30 @@ class Form extends Component {
 					res.text()
 					.then(text=>{
 						this.setState({
-							response: text
-						}, () =>{console.log(this.state.response)});
+							name: '',
+                            tel: '',
+                            address: '',
+                            roomquantity: '',
+                            walls: '',
+                            sqaremain: '',
+                            sqarelive: '',
+                            sqarekit: '',
+                            floor: '',
+                            flooring: '',
+                            description: '',
+                            heating: '',
+                            planning: '',
+                            parking: '',
+                            warming: '',
+                            price: '',
+                            currency: '',
+                            condition: '',
+                            class: '',
+                            response: true
+						}, () =>{console.log(response)});
 					})
 			},  rej =>{
-				this.setState({server_error: true})
+				console.log("server Errror")
 			});
 			
 		} catch (error) {
@@ -74,7 +103,18 @@ class Form extends Component {
                         <input type="text" value={this.state.name} name='name' placeholder='Имя продавца' onChange={(e) => this.handleInputChange(e)}/>
                         <input type="text" value={this.state.tel} name='tel' placeholder='Телефон продавца' onChange={(e) => this.handleInputChange(e)}/>
                     </div>
-                    <input type="text" value={this.state.address} name='address' placeholder='Адрес недвижимости' onChange={(e) => this.handleInputChange(e)}/>
+                    <input 
+                        ref={this.autocompleteInput}  
+                        id="autocomplete" 
+                        type="text"
+                        value={this.state.address}
+                        name='address'
+                        placeholder='Адрес недвижимости'
+                        onChange={(e) => this.handleInputChange(e)}
+                        >
+                            
+                    </input>
+                    {/* <input type="text" value={this.state.address} name='address' placeholder='Адрес недвижимости' onChange={(e) => this.handleInputChange(e)}/> */}
                     <div className='second'>
                         <select value={this.state.roomquantity} name='roomquantity' placeholder='Кол-во комнат' onChange={(e) => this.handleInputChange(e)} className='small'>
                             <option value="">Кол-во комнат</option>
@@ -149,10 +189,13 @@ class Form extends Component {
                     </div>
                 </div>
                 <button onClick={this.handleClick}>Оформить заявку</button>
-                
+                {
+                    this.state.response ? <h4>Успішно</h4> : ''
+                }
             </div>
         );
     }
 }
+
 
 export default Form;
