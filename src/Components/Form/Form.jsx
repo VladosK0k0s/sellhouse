@@ -11,41 +11,63 @@ class Form extends Component {
             tel: '',
             address: '',
             roomquantity: '',
-            walls: '',
             sqaremain: '',
             sqarelive: '',
             sqarekit: '',
             floor: '',
             flooring: '',
             description: '',
-            heating: '',
             planning: '',
             parking: '',
-            warming: '',
             price: '',
             currency: '',
             condition: '',
             class: '',
-            response: false
+            response: false,
+            failresponse: false
         }
         this.autocompleteInput = React.createRef();
         this.autocomplete = null;
     }
     handleInputChange = (e) =>{
         this.setState({
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value,
+            response: false,
+            failresponse: false
         })
     }
+    handlePlaceChanged = () =>{
+        this.setState({address: this.autocompleteInput.current.value});
+    }
     componentDidMount() {
-        this.autocomplete = new google.maps.places.Autocomplete(this.autocompleteInput.current,
-            {"types": ["geocode"]});
-    
-        this.autocomplete.addListener('place_changed', this.handlePlaceChanged);
+        let i = 0;
+        let error = true;
+        while(error){
+            try{
+                this.autocomplete = new google.maps.places.Autocomplete(this.autocompleteInput.current,
+                    {"types": ["geocode"]});
+            
+                this.autocomplete.addListener('place_changed', this.handlePlaceChanged);
+                error = false
+            }catch{
+            }
+            if(i>10){
+                console.log("Error google");
+                break;
+            }
+            i++;
+        }
+
       }
     handleClick = (e) =>{
         e.preventDefault()
         try {		
+<<<<<<< HEAD
 			const url = 'https://api.sellhouse.com.ua/sendData';
+=======
+            // const url = 'https://api.sellhouse.com.ua/sendData';
+            const url = 'http://localhost:4000/sendData';
+>>>>>>> c28e629bea05fc1e4ebcff762725021d50fa7ae1
 			const response = fetch(url, {
 					method: 'POST', // *GET, POST, PUT, DELETE, etc.
 					mode: 'cors', // no-cors, cors, *same-origin
@@ -59,32 +81,32 @@ class Form extends Component {
 			});
 			response.then(
 				res => {
-					res.text()
-					.then(text=>{
-						this.setState({
-							name: '',
-                            tel: '',
-                            address: '',
-                            roomquantity: '',
-                            walls: '',
-                            sqaremain: '',
-                            sqarelive: '',
-                            sqarekit: '',
-                            floor: '',
-                            flooring: '',
-                            description: '',
-                            heating: '',
-                            planning: '',
-                            parking: '',
-                            warming: '',
-                            price: '',
-                            currency: '',
-                            condition: '',
-                            class: '',
-                            year: '',
-                            response: true
-						});
-					})
+                    if(res.status === 200) 
+                        res.text()
+                        .then(text=>{
+                            console.log(text)
+                            this.setState({
+                                name: '',
+                                tel: '',
+                                address: '',
+                                roomquantity: '',
+                                walls: '',
+                                sqaremain: '',
+                                sqarelive: '',
+                                floor: '',
+                                flooring: '',
+                                description: '',
+                                planning: '',
+                                parking: '',
+                                price: '',
+                                currency: '',
+                                condition: '',
+                                class: '',
+                                year: '',
+                                response: true
+                            });
+                        })
+                    else this.setState({failresponse: true})
 			},  rej =>{
 				console.log("server Errror")
 			});
@@ -111,11 +133,12 @@ class Form extends Component {
                         type="text"
                         value={this.state.address}
                         name='address'
-                        placeholder='Адрес недвижимости'
+                        required
+                        placeholder='Адрес недвижимости*'
                         onChange={(e) => this.handleInputChange(e)}
                         > 
                     </input>
-                    {/* <input type="text" value={this.state.address} name='address' placeholder='Адрес недвижимости' onChange={(e) => this.handleInputChange(e)}/> */}
+                    {/* <input type="text" value={this.state.address} required name='address' placeholder='Адрес недвижимости' onChange={(e) => this.handleInputChange(e)}/> */}
                     <div className='fourth'>
                         <select value={this.state.roomquantity} name='roomquantity' placeholder='Кол-во комнат' onChange={(e) => this.handleInputChange(e)}>
                             <option value="">Кол-во комнат</option>
@@ -225,6 +248,9 @@ class Form extends Component {
                 </form>
                 {
                     this.state.response ? <h4>Успешно</h4> : ''
+                }
+                {
+                    this.state.failresponse ? <h4 className='h4error'>Что-то пошло не так, попробуйте ещё</h4> : ''
                 }
             </div>
         );
