@@ -62,12 +62,8 @@ class Form extends Component {
     handleClick = (e) =>{
         e.preventDefault()
         try {		
-<<<<<<< HEAD
-			const url = 'https://api.sellhouse.com.ua/sendData';
-=======
-            // const url = 'https://api.sellhouse.com.ua/sendData';
-            const url = 'http://localhost:4000/sendData';
->>>>>>> c28e629bea05fc1e4ebcff762725021d50fa7ae1
+             const url = 'https://api.sellhouse.com.ua/sendData';
+            //const url = 'http://localhost:4000/sendData';
 			const response = fetch(url, {
 					method: 'POST', // *GET, POST, PUT, DELETE, etc.
 					mode: 'cors', // no-cors, cors, *same-origin
