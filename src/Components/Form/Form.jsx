@@ -45,7 +45,7 @@ class Form extends Component {
     handleClick = (e) =>{
         e.preventDefault()
         try {		
-			const url = 'http://api.sellhouse.com.ua/sendData';
+			const url = 'https://api.sellhouse.com.ua/sendData';
 			const response = fetch(url, {
 					method: 'POST', // *GET, POST, PUT, DELETE, etc.
 					mode: 'cors', // no-cors, cors, *same-origin
@@ -221,7 +221,7 @@ class Form extends Component {
                         </select>
                     </div>
                     <p>* - обязательные к заполнению поля</p>
-                    <button type="button">Оформить заявку</button>
+                    <button>Оформить заявку</button>
                 </form>
                 {
                     this.state.response ? <h4>Успешно</h4> : ''
