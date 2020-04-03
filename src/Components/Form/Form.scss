@@ -3,8 +3,9 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	height: 100vh;
 	h4{
-		margin-top: -40px;
+		margin-top: 10px;
 		font-family: sans-serif;
 		font-style: normal;
 		text-align: center;
@@ -126,7 +127,7 @@
 		form{
 			width: 98%;
 			input, textarea, select{
-				margin: 3px 3px;
+				margin: 7px 3px;
 				padding: 5px;
 				outline: none;
 				border: 1px solid grey;
