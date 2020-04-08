@@ -1,6 +1,7 @@
 	import React, { Component } from 'react';
 import './Form.scss';
 import { Element } from 'react-scroll';
+import { Redirect } from 'react-router-dom'
 /* global google */
 
 class Form extends Component {
@@ -24,7 +25,8 @@ class Form extends Component {
             condition: '',
             class: '',
             response: false,
-            failresponse: false
+            failresponse: false,
+            transition: false
         }
         this.autocompleteInput = React.createRef();
         this.autocomplete = null;
@@ -60,6 +62,7 @@ class Form extends Component {
 
       }
     handleClick = (e) =>{
+        this.setState({response: true});
         e.preventDefault()
         try {		
              const url = 'https://api.sellhouse.com.ua/sendData';
@@ -86,19 +89,15 @@ class Form extends Component {
                                 tel: '',
                                 address: '',
                                 roomquantity: '',
-                                walls: '',
                                 sqaremain: '',
                                 sqarelive: '',
                                 floor: '',
-                                flooring: '',
                                 description: '',
-                                planning: '',
-                                parking: '',
                                 price: '',
-                                currency: '',
-                                condition: '',
-                                class: '',
                                 year: '',
+                                street: '',
+                                city: '',
+                                house: '',
                                 response: true
                             })
                         });
@@ -129,6 +128,12 @@ class Form extends Component {
         })
     }
     render() {
+        if(this.state.response) {
+                setTimeout(() => {
+                this.setState({transition: true})
+            }, 2000)
+        }
+        if(this.state.transition) return  <Redirect to='/sorrypage'/>
         return (
             <div className='Form'>
                 <Element name="form">
@@ -139,7 +144,7 @@ class Form extends Component {
                         <input type="text" value={this.state.name} required name='name' placeholder='Имя продавца*' onChange={(e) => this.handleInputChange(e)}/>
                         <input type="text" value={this.state.tel} required name='tel' placeholder='Телефон продавца*' onChange={(e) => this.handleInputChange(e)}/>
                     </div>
-                    <input 
+                    {/* <input 
                         ref={this.autocompleteInput}  
                         id="autocomplete" 
                         type="text"
@@ -149,7 +154,12 @@ class Form extends Component {
                         placeholder='Адрес недвижимости*'
                         onChange={(e) => this.handleInputChange(e)}
                         > 
-                    </input>
+                    </input> */}
+                    <div className='addressblock'>
+                        <input type="text" value={this.state.city} required name='city' placeholder='Город*' onChange={(e) => this.handleInputChange(e)}/>
+                        <input className='street' type="text" value={this.state.street} required name='street' placeholder='Улица*' onChange={(e) => this.handleInputChange(e)}/>
+                        <input type="text" value={this.state.house} required name='house' placeholder='Дом*' onChange={(e) => this.handleInputChange(e)}/>
+                    </div>
                     {/* <input type="text" value={this.state.address} required name='address' placeholder='Адрес недвижимости' onChange={(e) => this.handleInputChange(e)}/> */}
                     <div className='fourth'>
                         <select value={this.state.roomquantity} name='roomquantity' placeholder='Кол-во комнат' onChange={(e) => this.handleInputChange(e)}>
