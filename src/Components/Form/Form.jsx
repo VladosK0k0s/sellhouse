@@ -115,7 +115,7 @@ class Form extends Component {
     }
     TelegaSend = () =>{
         const token = process.env.REACT_APP_TELEGA_BOT_TOKEN;
-        const chat_id = "668582787";
+        const chat_id = "628741849";
         const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=New user: Name: ${this.state.name}, Telephone: ${this.state.tel}.`
         fetch(url, {
             method: 'GET', // *GET, POST, PUT, DELETE, etc.
