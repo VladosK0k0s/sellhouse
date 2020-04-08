@@ -64,53 +64,53 @@ class Form extends Component {
     handleClick = (e) =>{
         this.setState({response: true});
         e.preventDefault()
-        // try {		
-        //      const url = 'https://api.sellhouse.com.ua/sendData';
-        //     //const url = 'http://localhost:4000/sendData';
-		// 	const response = fetch(url, {
-		// 			method: 'POST', // *GET, POST, PUT, DELETE, etc.
-		// 			mode: 'cors', // no-cors, cors, *same-origin
-		// 			cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-		// 			credentials: 'same-origin', // include, *same-origin, omit
-		// 			headers: {
-		// 					'Content-Type': 'application/json',
-		// 					//'Content-Type': 'application/x-www-form-urlencoded',
-		// 			},
-		// 			body: JSON.stringify(this.state),
-		// 	});
-		// 	response.then(
-		// 		res => {
-        //             if(res.status === 200) 
-        //                 res.text()
-        //                 .then(text => {console.log('text');this.TelegaSend()})
-        //                 .then(() =>{
-        //                     this.setState({
-        //                         name: '',
-        //                         tel: '',
-        //                         address: '',
-        //                         roomquantity: '',
-        //                         sqaremain: '',
-        //                         sqarelive: '',
-        //                         floor: '',
-        //                         description: '',
-        //                         price: '',
-        //                         year: '',
-        //                         street: '',
-        //                         city: '',
-        //                         house: '',
-        //                         response: true
-        //                     })
-        //                 });
-        //             else this.setState({failresponse: true})
-		// 	},  rej =>{
-        //         console.log("server Errror")
-        //         this.setState({failresponse: true})
-		// 	});
+        try {		
+             const url = 'https://api.sellhouse.com.ua/sendData';
+            //const url = 'http://localhost:4000/sendData';
+			const response = fetch(url, {
+					method: 'POST', // *GET, POST, PUT, DELETE, etc.
+					mode: 'cors', // no-cors, cors, *same-origin
+					cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+					credentials: 'same-origin', // include, *same-origin, omit
+					headers: {
+							'Content-Type': 'application/json',
+							//'Content-Type': 'application/x-www-form-urlencoded',
+					},
+					body: JSON.stringify(this.state),
+			});
+			response.then(
+				res => {
+                    if(res.status === 200) 
+                        res.text()
+                        .then(text => {console.log('text');this.TelegaSend()})
+                        .then(() =>{
+                            this.setState({
+                                name: '',
+                                tel: '',
+                                address: '',
+                                roomquantity: '',
+                                sqaremain: '',
+                                sqarelive: '',
+                                floor: '',
+                                description: '',
+                                price: '',
+                                year: '',
+                                street: '',
+                                city: '',
+                                house: '',
+                                response: true
+                            })
+                        });
+                    else this.setState({failresponse: true})
+			},  rej =>{
+                console.log("server Errror")
+                this.setState({failresponse: true})
+			});
 			
-		// } catch (error) {
-		// 	console.error('Ошибка:', error);
-        // }
-        // return false;
+		} catch (error) {
+			console.error('Ошибка:', error);
+        }
+        return false;
     }
     TelegaSend = () =>{
         const token = process.env.REACT_APP_TELEGA_BOT_TOKEN;
@@ -130,7 +130,6 @@ class Form extends Component {
     render() {
         if(this.state.response) {
                 setTimeout(() => {
-                console.log(this.state.transition)
                 this.setState({transition: true})
             }, 2000)
         }
