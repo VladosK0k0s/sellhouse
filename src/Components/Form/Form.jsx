@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Form.scss';
 import { Element } from 'react-scroll';
+import { Redirect } from 'react-router-dom'
 /* global google */
 
 class Form extends Component {
@@ -24,7 +25,8 @@ class Form extends Component {
             condition: '',
             class: '',
             response: false,
-            failresponse: false
+            failresponse: false,
+            transition: false
         }
         this.autocompleteInput = React.createRef();
         this.autocomplete = null;
@@ -60,58 +62,55 @@ class Form extends Component {
 
       }
     handleClick = (e) =>{
+        this.setState({response: true});
         e.preventDefault()
-        try {		
-             const url = 'https://api.sellhouse.com.ua/sendData';
-            //const url = 'http://localhost:4000/sendData';
-			const response = fetch(url, {
-					method: 'POST', // *GET, POST, PUT, DELETE, etc.
-					mode: 'cors', // no-cors, cors, *same-origin
-					cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-					credentials: 'same-origin', // include, *same-origin, omit
-					headers: {
-							'Content-Type': 'application/json',
-							//'Content-Type': 'application/x-www-form-urlencoded',
-					},
-					body: JSON.stringify(this.state),
-			});
-			response.then(
-				res => {
-                    if(res.status === 200) 
-                        res.text()
-                        .then(text => {console.log('text');this.TelegaSend()})
-                        .then(() =>{
-                            this.setState({
-                                name: '',
-                                tel: '',
-                                address: '',
-                                roomquantity: '',
-                                walls: '',
-                                sqaremain: '',
-                                sqarelive: '',
-                                floor: '',
-                                flooring: '',
-                                description: '',
-                                planning: '',
-                                parking: '',
-                                price: '',
-                                currency: '',
-                                condition: '',
-                                class: '',
-                                year: '',
-                                response: true
-                            })
-                        });
-                    else this.setState({failresponse: true})
-			},  rej =>{
-                console.log("server Errror")
-                this.setState({failresponse: true})
-			});
+        // try {		
+        //      const url = 'https://api.sellhouse.com.ua/sendData';
+        //     //const url = 'http://localhost:4000/sendData';
+		// 	const response = fetch(url, {
+		// 			method: 'POST', // *GET, POST, PUT, DELETE, etc.
+		// 			mode: 'cors', // no-cors, cors, *same-origin
+		// 			cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+		// 			credentials: 'same-origin', // include, *same-origin, omit
+		// 			headers: {
+		// 					'Content-Type': 'application/json',
+		// 					//'Content-Type': 'application/x-www-form-urlencoded',
+		// 			},
+		// 			body: JSON.stringify(this.state),
+		// 	});
+		// 	response.then(
+		// 		res => {
+        //             if(res.status === 200) 
+        //                 res.text()
+        //                 .then(text => {console.log('text');this.TelegaSend()})
+        //                 .then(() =>{
+        //                     this.setState({
+        //                         name: '',
+        //                         tel: '',
+        //                         address: '',
+        //                         roomquantity: '',
+        //                         sqaremain: '',
+        //                         sqarelive: '',
+        //                         floor: '',
+        //                         description: '',
+        //                         price: '',
+        //                         year: '',
+        //                         street: '',
+        //                         city: '',
+        //                         house: '',
+        //                         response: true
+        //                     })
+        //                 });
+        //             else this.setState({failresponse: true})
+		// 	},  rej =>{
+        //         console.log("server Errror")
+        //         this.setState({failresponse: true})
+		// 	});
 			
-		} catch (error) {
-			console.error('Ошибка:', error);
-        }
-        return false;
+		// } catch (error) {
+		// 	console.error('Ошибка:', error);
+        // }
+        // return false;
     }
     TelegaSend = () =>{
         const token = process.env.REACT_APP_TELEGA_BOT_TOKEN;
@@ -129,6 +128,13 @@ class Form extends Component {
         })
     }
     render() {
+        if(this.state.response) {
+                setTimeout(() => {
+                console.log(this.state.transition)
+                this.setState({transition: true})
+            }, 2000)
+        }
+        if(this.state.transition) return  <Redirect to='/sorrypage'/>
         return (
             <div className='Form'>
                 <Element name="form">
@@ -139,7 +145,7 @@ class Form extends Component {
                         <input type="text" value={this.state.name} required name='name' placeholder='Имя продавца*' onChange={(e) => this.handleInputChange(e)}/>
                         <input type="text" value={this.state.tel} required name='tel' placeholder='Телефон продавца*' onChange={(e) => this.handleInputChange(e)}/>
                     </div>
-                    <input 
+                    {/* <input 
                         ref={this.autocompleteInput}  
                         id="autocomplete" 
                         type="text"
@@ -149,7 +155,12 @@ class Form extends Component {
                         placeholder='Адрес недвижимости*'
                         onChange={(e) => this.handleInputChange(e)}
                         > 
-                    </input>
+                    </input> */}
+                    <div className='addressblock'>
+                        <input type="text" value={this.state.city} required name='city' placeholder='Город*' onChange={(e) => this.handleInputChange(e)}/>
+                        <input className='street' type="text" value={this.state.street} required name='street' placeholder='Улица*' onChange={(e) => this.handleInputChange(e)}/>
+                        <input type="text" value={this.state.house} required name='house' placeholder='Дом*' onChange={(e) => this.handleInputChange(e)}/>
+                    </div>
                     {/* <input type="text" value={this.state.address} required name='address' placeholder='Адрес недвижимости' onChange={(e) => this.handleInputChange(e)}/> */}
                     <div className='fourth'>
                         <select value={this.state.roomquantity} name='roomquantity' placeholder='Кол-во комнат' onChange={(e) => this.handleInputChange(e)}>

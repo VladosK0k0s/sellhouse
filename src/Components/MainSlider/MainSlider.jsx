@@ -9,6 +9,7 @@ class MainSlider extends Component {
             <div className='MainSlider' >
                 <h1>Выкуп недвижимости</h1>
                 <h2>Быстро выкупим вашу недвижимость по рыночной цене</h2>
+                <p>На данный момент обрабатываются анкета с квартирами в административных городах Украины</p>
                 {/* <button><Link activeClass="active" to="form" spy={true} smooth={true} offset={50} duration={500}>продать недвижимость</Link></button> */}
             </div>
         );
