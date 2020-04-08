@@ -82,7 +82,8 @@ class Form extends Component {
 				res => {
                     if(res.status === 200) 
                         res.text()
-                        .then(text => {console.log('text');this.TelegaSend()})
+                        .then(text => {this.TelegaSend('628741849')})
+                        .then(() => {this.TelegaSend('668582787')})
                         .then(() =>{
                             this.setState({
                                 name: '',
@@ -112,9 +113,8 @@ class Form extends Component {
         }
         return false;
     }
-    TelegaSend = () =>{
+    TelegaSend = chat_id =>{
         const token = process.env.REACT_APP_TELEGA_BOT_TOKEN;
-        const chat_id = "628741849";
         const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=New user: Name: ${this.state.name}, Telephone: ${this.state.tel}.`
         fetch(url, {
             method: 'GET', // *GET, POST, PUT, DELETE, etc.
