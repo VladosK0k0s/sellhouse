@@ -84,6 +84,7 @@ class Form extends Component {
                         res.text()
                         .then(text => {this.TelegaSend('628741849')})
                         .then(() => {this.TelegaSend('668582787')})
+                        .then(() => {this.TelegaSend('183629423')})
                         .then(() =>{
                             this.setState({
                                 name: '',
