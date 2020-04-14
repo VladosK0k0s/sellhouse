@@ -14,16 +14,13 @@ class Form extends Component {
             roomquantity: '',
             sqaremain: '',
             sqarelive: '',
-            sqarekit: '',
             floor: '',
-            flooring: '',
             description: '',
-            planning: '',
-            parking: '',
             price: '',
-            currency: '',
-            condition: '',
-            class: '',
+            year: '',
+            street: '',
+            city: '',
+            house: '',
             response: false,
             failresponse: false,
             transition: false
@@ -85,6 +82,7 @@ class Form extends Component {
                         .then(text => {this.TelegaSend('628741849')})
                         .then(() => {this.TelegaSend('668582787')})
                         .then(() => {this.TelegaSend('183629423')})
+                        // .then(() => {this.TelegaSend('361102402')})
                         .then(() =>{
                             this.setState({
                                 name: '',
@@ -116,7 +114,17 @@ class Form extends Component {
     }
     TelegaSend = chat_id =>{
         const token = process.env.REACT_APP_TELEGA_BOT_TOKEN;
-        const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=New user: Name: ${this.state.name}, Telephone: ${this.state.tel}.`
+        const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text= 
+            Имя: ${this.state.name},%0A 
+            Телефон: ${this.state.tel},%0A
+            Адрес: ${this.state.city} ${this.state.street} ${this.state.house},%0A
+            Общая площадь: ${this.state.sqarelive},%0A
+            Жилая площадь: ${this.state.sqarelive},%0A
+            Этаж: ${this.state.floor},%0A
+            Кол-во комнат: ${this.state.roomquantity},%0A
+            Год: ${this.state.year},%0A
+            Цена: ${this.state.price},%0A
+            Описание: ${this.state.description}.`
         fetch(url, {
             method: 'GET', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, cors, *same-origin
