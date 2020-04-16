@@ -79,7 +79,7 @@ class Form extends Component {
 				res => {
                     if(res.status === 200) 
                         res.text()
-                        .then(text => {this.TelegaSend('628741849')})
+                        // .then(text => {this.TelegaSend('628741849')})
                         .then(() => {this.TelegaSend('668582787')})
                         .then(() => {this.TelegaSend('183629423')})
                         // .then(() => {this.TelegaSend('361102402')})
@@ -118,7 +118,7 @@ class Form extends Component {
             Имя: ${this.state.name},%0A 
             Телефон: ${this.state.tel},%0A
             Адрес: ${this.state.city} ${this.state.street} ${this.state.house},%0A
-            Общая площадь: ${this.state.sqarelive},%0A
+            Общая площадь: ${this.state.sqaremain},%0A
             Жилая площадь: ${this.state.sqarelive},%0A
             Этаж: ${this.state.floor},%0A
             Кол-во комнат: ${this.state.roomquantity},%0A
